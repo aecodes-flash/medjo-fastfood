@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate }         from 'react-router-dom'
 import Navbar                  from './Navbar'
 import { useAuthStore }        from '../Store/useAuthStore'
-import { useCart }             from '../pages/CartPage'
+import { useCart }             from '../Pages/CartPage'
 import axios                   from 'axios'
 import toast                   from 'react-hot-toast'
 
