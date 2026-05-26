@@ -1,8 +1,8 @@
 import { useState }                    from 'react'
 import { useParams, useNavigate }      from 'react-router-dom'
 import { useAuthStore }                from '../Store/useAuthStore'
-import StarRating                      from '../components/StarRating'
-import Navbar                          from '../components/Navbar'
+import StarRating                      from '../Components/StarRating'
+import Navbar                          from '../Components/Navbar'
 import axios                           from 'axios'
 import toast                           from 'react-hot-toast'
 
