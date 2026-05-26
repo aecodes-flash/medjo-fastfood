@@ -7,24 +7,24 @@ import { Routes, Route } from "react-router-dom";
 import { Toaster }       from "react-hot-toast";
 
 // ── Page imports ─────────────────────────────────────────────
-import Home        from "./pages/Home";
-import LoginPage   from "./pages/LoginPage";
-import Signup      from "./pages/Signup";
-import MenuPage    from "./pages/MenuPage";
-import CartPage    from "./pages/CartPage";
-import Checkout    from "./pages/Checkout";
-import ProfilePage from "./pages/ProfilePage";
-import ReviewPage  from "./pages/ReviewPage";
-import Orders      from "./components/Orders";
+import Home        from "./Pages/Home";
+import LoginPage   from "./Pages/LoginPage";
+import Signup      from "./Pages/Signup";
+import MenuPage    from "./Pages/MenuPage";
+import CartPage    from "./Pages/CartPage";
+import Checkout    from "./Pages/Checkout";
+import ProfilePage from "./Pages/ProfilePage";
+import ReviewPage  from "./Pages/ReviewPage";
+import Orders      from "./Components/Orders";
 
 // ── Admin imports ─────────────────────────────────────────────
-import AdminLayout    from "./pages/admin/AdminLayout";
-import AdminDashboard from "./pages/admin/AdminDashboard";
-import AdminOrders    from "./pages/admin/AdminOrders";
-import AdminPayments  from "./pages/admin/AdminPayments";
-import AdminMenu      from "./pages/admin/AdminMenu";
-import AdminSettings  from "./pages/admin/AdminSettings";
-import AdminReviews   from "./pages/admin/AdminReviews";
+import AdminLayout    from "./Pages/admin/AdminLayout";
+import AdminDashboard from "./Pages/admin/AdminDashboard";
+import AdminOrders    from "./Pages/admin/AdminOrders";
+import AdminPayments  from "./Pages/admin/AdminPayments";
+import AdminMenu      from "./Pages/admin/AdminMenu";
+import AdminSettings  from "./Pages/admin/AdminSettings";
+import AdminReviews   from "./Pages/admin/AdminReviews";
 
 function App() {
   return (
