@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medyo Fast Food — Admin</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- Add/Edit Item Modal -->
+<div class="modal-overlay" id="itemModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 id="modalTitle">Add Menu Item</h2>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-row">
+      <div class="form-group">
+        <label>Item Name</label>
+        <input type="text" placeholder="e.g. Classic Burger" id="itemName">
+      </div>
+      <div class="form-group">
+        <label>Price (₱)</label>
+        <input type="number" placeholder="130" id="itemPrice">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Category</label>
+      <select id="itemCategory">
+        <option>Burgers</option>
+        <option>Chicken</option>
+        <option>Drinks</option>
+        <option>Pizza</option>
+        <option>Desserts</option>
+        <option>Fries &amp; Sides</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea placeholder="Short description of the item..."></textarea>
+    </div>
+    <div class="form-group">
+      <label>Image URL</label>
+      <input type="text" placeholder="https://...">
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeModal()">Cancel</button>
+      <button class="btn-modal-save" onclick="saveItem()">Save Item</button>
+    </div>
+  </div>
+</div>
+
+<!-- Order Detail Modal -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2>Order #ORD-004</h2>
+      <button class="modal-close" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:0.8rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:4px;">Customer</div>
+      <div style="font-weight:800;">Maria Santos</div>
+      <div style="font-size:0.85rem;color:var(--muted);">📍 123 Rizal St., Cavite City</div>
+    </div>
+    <div style="margin-bottom:16px;">
+      <div style="font-size:0.8rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">Items Ordered</div>
+      <div style="display:flex;flex-direction:column;gap:8px;">
+        <div style="display:flex;justify-content:space-between;font-size:0.9rem;"><span>Classic Burger × 2</span><span style="color:var(--orange);font-weight:800;">₱260</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:0.9rem;"><span>Milk Tea × 1</span><span style="color:var(--orange);font-weight:800;">₱50</span></div>
+        <div style="display:flex;justify-content:space-between;font-size:0.9rem;"><span>Fries × 2</span><span style="color:var(--orange);font-weight:800;">₱100</span></div>
+      </div>
+      <div style="border-top:1px solid var(--border);margin-top:12px;padding-top:12px;display:flex;justify-content:space-between;font-weight:900;">
+        <span>Total</span><span style="color:var(--orange);">₱459</span>
+      </div>
+    </div>
+    <div style="margin-bottom:20px;">
+      <div style="font-size:0.8rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;">Update Status</div>
+      <select style="width:100%;background:#333;border:1px solid var(--border);border-radius:8px;padding:12px 14px;color:white;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;">
+        <option>Pending</option>
+        <option selected>Preparing</option>
+        <option>Out for Delivery</option>
+        <option>Delivered</option>
+        <option>Cancelled</option>
+      </select>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-modal-cancel" onclick="closeOrderModal()">Close</button>
+      <button class="btn-modal-save" onclick="closeOrderModal(); showToast('Order status updated!')">Update Order</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== LOGIN PAGE =================== -->
+<div class="page active" id="page-login" style="display:flex;">
+  <div class="login-bg-text">Admin<br>Panel.</div>
+  <div class="login-card">
+    <div class="login-logo">
+      <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+        <circle cx="20" cy="20" r="19" fill="#1a0a02" stroke="#f07020" stroke-width="1.5"/>
+        <path d="M10 22 Q20 14 30 22" stroke="#f07020" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+        <circle cx="14" cy="17" r="1.5" fill="#f07020"/>
+        <circle cx="20" cy="15" r="1.5" fill="#f07020"/>
+        <circle cx="26" cy="17" r="1.5" fill="#f07020"/>
+      </svg>
+      Medyo Fast Food
+    </div>
+    <span class="admin-badge">ADMIN PORTAL</span>
+    <h1>Admin Login</h1>
+    <div class="form-group">
+      <input type="text" placeholder="Admin username or email">
+    </div>
+    <div class="form-group">
+      <input type="password" placeholder="Password">
+    </div>
+    <div class="login-extras">
+      <label><input type="checkbox"> Remember me</label>
+      <a>Forgot password?</a>
+    </div>
+    <button class="btn-login" onclick="goDashboard()">LOGIN TO ADMIN</button>
+  </div>
+</div>
+
+<!-- =================== ADMIN SHELL =================== -->
+<div class="page" id="page-admin">
+  <div class="admin-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <svg width="28" height="28" viewBox="0 0 40 40" fill="none">
+          <circle cx="20" cy="20" r="19" fill="#1a0a02" stroke="#f07020" stroke-width="1.5"/>
+          <path d="M10 22 Q20 14 30 22" stroke="#f07020" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <circle cx="14" cy="17" r="1.5" fill="#f07020"/>
+          <circle cx="20" cy="15" r="1.5" fill="#f07020"/>
+          <circle cx="26" cy="17" r="1.5" fill="#f07020"/>
+        </svg>
+        Medyo Fast Food
+      </div>
+      <div class="sidebar-admin-label">Main Menu</div>
+      <nav class="sidebar-nav">
+        <a class="nav-item active" onclick="showSection('dashboard', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+          Dashboard
+        </a>
+        <a class="nav-item" onclick="showSection('orders', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/></svg>
+          Orders
+          <span class="nav-badge">5</span>
+        </a>
+        <a class="nav-item" onclick="showSection('menu', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M12 6v6m0 0v6m0-6h6m-6 0H6"/><circle cx="12" cy="12" r="9"/></svg>
+          Menu Management
+        </a>
+        <a class="nav-item" onclick="showSection('customers', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87M16 3.13a4 4 0 010 7.75"/></svg>
+          Customers
+        </a>
+        <a class="nav-item" onclick="showSection('feedback', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          Feedback
+          <span class="nav-badge" style="background:var(--yellow);color:#1a0a02;">3</span>
+        </a>
+        <a class="nav-item" onclick="showSection('settings', this)">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+          Settings
+        </a>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="admin-profile" onclick="showToast('Profile settings coming soon!')">
+          <div class="avatar">A</div>
+          <div class="admin-profile-info">
+            <div class="name">Admin User</div>
+            <div class="role">Super Admin</div>
+          </div>
+          <svg width="16" height="16" fill="none" viewBox="0 0 24 24" stroke="#666" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+        </div>
+        <a class="nav-item" style="margin-top:4px;" onclick="showPage('page-login')">
+          <svg fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"/></svg>
+          Logout
+        </a>
+      </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main-content">
+
+      <!-- ===== DASHBOARD ===== -->
+      <div id="section-dashboard">
+        <div class="topbar">
+          <div class="topbar-title">Dashboard</div>
+          <div class="topbar-search">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#555" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="#555" stroke-width="2" stroke-linecap="round"/></svg>
+            <input placeholder="Search...">
+          </div>
+        </div>
+        <div class="content">
+          <div class="stats-grid">
+            <div class="stat-card">
+              <div class="stat-label">Today's Revenue</div>
+              <div class="stat-value">₱8,420</div>
+              <div class="stat-change">↑ +12% vs yesterday</div>
+              <div class="stat-icon">💰</div>
+            </div>
+            <div class="stat-card green">
+              <div class="stat-label">Orders Today</div>
+              <div class="stat-value">34</div>
+              <div class="stat-change">↑ +8 new orders</div>
+              <div class="stat-icon">📋</div>
+            </div>
+            <div class="stat-card red">
+              <div class="stat-label">Pending Orders</div>
+              <div class="stat-value">5</div>
+              <div class="stat-change down">↓ Needs attention</div>
+              <div class="stat-icon">⏳</div>
+            </div>
+            <div class="stat-card yellow">
+              <div class="stat-label">Total Customers</div>
+              <div class="stat-value">218</div>
+              <div class="stat-change">↑ +3 this week</div>
+              <div class="stat-icon">👥</div>
+            </div>
+          </div>
+
+          <div class="dashboard-grid">
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Recent Orders</span>
+                <button class="card-action" onclick="showSection('orders', document.querySelector('.nav-item:nth-child(2)'))">View All</button>
+              </div>
+              <div class="card-body" style="padding:0;">
+                <table>
+                  <thead><tr>
+                    <th>Order ID</th><th>Customer</th><th>Items</th><th>Total</th><th>Status</th>
+                  </tr></thead>
+                  <tbody>
+                    <tr><td>#ORD-001</td><td>Juan Dela Cruz</td><td>Classic Burger × 2</td><td style="color:var(--orange);font-weight:800;">₱390</td><td><span class="status-pill pill-delivered">Delivered</span></td></tr>
+                    <tr><td>#ORD-002</td><td>Maria Santos</td><td>Crispy Chicken, Fries</td><td style="color:var(--orange);font-weight:800;">₱490</td><td><span class="status-pill pill-preparing">Preparing</span></td></tr>
+                    <tr><td>#ORD-003</td><td>Pedro Reyes</td><td>Milk Tea × 3, Pizza</td><td style="color:var(--orange);font-weight:800;">₱890</td><td><span class="status-pill pill-pending">Pending</span></td></tr>
+                    <tr><td>#ORD-004</td><td>Ana Lopez</td><td>Double Smash × 2</td><td style="color:var(--orange);font-weight:800;">₱350</td><td><span class="status-pill pill-preparing">Preparing</span></td></tr>
+                    <tr><td>#ORD-005</td><td>Carlo Bautista</td><td>Chicken Wings, Drinks</td><td style="color:var(--orange);font-weight:800;">₱560</td><td><span class="status-pill pill-delivered">Delivered</span></td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <span class="card-title">Top Selling Items</span>
+                <button class="card-action">This Week</button>
+              </div>
+              <div class="card-body">
+                <div class="top-item">
+                  <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=100&q=80" alt="">
+                  <div class="top-item-info"><div class="iname">Classic Burger</div><div class="isold">142 sold</div></div>
+                  <div class="top-item-price">₱130</div>
+                </div>
+                <div class="top-item">
+                  <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=100&q=80" alt="">
+                  <div class="top-item-info"><div class="iname">Chicken Wings</div><div class="isold">98 sold</div></div>
+                  <div class="top-item-price">₱160</div>
+                </div>
+                <div class="top-item">
+                  <img src="https://images.unsplash.com/photo-1558857563-b371033873b8?w=100&q=80" alt="">
+                  <div class="top-item-info"><div class="iname">Milk Tea</div><div class="isold">87 sold</div></div>
+                  <div class="top-item-price">₱50</div>
+                </div>
+                <div class="top-item">
+                  <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=100&q=80" alt="">
+                  <div class="top-item-info"><div class="iname">Pizza</div><div class="isold">64 sold</div></div>
+                  <div class="top-item-price">₱100</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Sales Chart -->
+          <div class="card">
+            <div class="card-header">
+              <span class="card-title">Weekly Sales Overview</span>
+              <button class="card-action">This Week</button>
+            </div>
+            <div class="card-body">
+              <div class="chart-wrap">
+                <div class="bar-col"><div class="bar" style="height:55px;"></div><div class="bar-label">Mon</div></div>
+                <div class="bar-col"><div class="bar" style="height:72px;"></div><div class="bar-label">Tue</div></div>
+                <div class="bar-col"><div class="bar" style="height:48px;"></div><div class="bar-label">Wed</div></div>
+                <div class="bar-col"><div class="bar" style="height:90px;background:var(--orange-dark);opacity:1;"></div><div class="bar-label">Thu</div></div>
+                <div class="bar-col"><div class="bar" style="height:110px;"></div><div class="bar-label">Fri</div></div>
+                <div class="bar-col"><div class="bar" style="height:100px;"></div><div class="bar-label">Sat</div></div>
+                <div class="bar-col"><div class="bar" style="height:85px;"></div><div class="bar-label">Sun</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== ORDERS ===== -->
+      <div id="section-orders" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Orders Management</div>
+          <div class="topbar-search">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#555" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="#555" stroke-width="2" stroke-linecap="round"/></svg>
+            <input placeholder="Search order ID or customer...">
+          </div>
+        </div>
+        <div class="content">
+          <div class="filter-bar">
+            <button class="filter-tab active" onclick="setFilter('all',this)">All Orders</button>
+            <button class="filter-tab" onclick="setFilter('pending',this)">Pending <span style="background:rgba(136,136,136,0.25);padding:1px 7px;border-radius:10px;font-size:0.75rem;margin-left:4px;">5</span></button>
+            <button class="filter-tab" onclick="setFilter('preparing',this)">Preparing</button>
+            <button class="filter-tab" onclick="setFilter('delivered',this)">Delivered</button>
+            <button class="filter-tab" onclick="setFilter('cancelled',this)">Cancelled</button>
+          </div>
+          <div class="orders-table-wrap">
+            <table>
+              <thead><tr>
+                <th>Order ID</th><th>Customer</th><th>Address</th><th>Items</th><th>Total</th><th>Payment</th><th>Status</th><th>Actions</th>
+              </tr></thead>
+              <tbody>
+                <tr><td>#ORD-001</td><td>Juan Dela Cruz</td><td>Cavite City</td><td>Classic Burger × 2</td><td style="color:var(--orange);font-weight:800;">₱390</td><td>Cash</td><td><span class="status-pill pill-delivered">Delivered</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button><button class="btn-sm btn-done" onclick="showToast('Marked as delivered!','green')">Done</button></div></td></tr>
+                <tr><td>#ORD-002</td><td>Maria Santos</td><td>Naic, Cavite</td><td>Crispy Chicken, Fries</td><td style="color:var(--orange);font-weight:800;">₱490</td><td>GCash</td><td><span class="status-pill pill-preparing">Preparing</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button><button class="btn-sm btn-done" onclick="showToast('Marked as delivered!','green')">Done</button><button class="btn-sm btn-cancel" onclick="showToast('Order cancelled.')">Cancel</button></div></td></tr>
+                <tr><td>#ORD-003</td><td>Pedro Reyes</td><td>Trece Martires</td><td>Milk Tea × 3, Pizza</td><td style="color:var(--orange);font-weight:800;">₱890</td><td>GCash</td><td><span class="status-pill pill-pending">Pending</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button><button class="btn-sm btn-done" onclick="showToast('Marked as delivered!','green')">Done</button><button class="btn-sm btn-cancel" onclick="showToast('Order cancelled.')">Cancel</button></div></td></tr>
+                <tr><td>#ORD-004</td><td>Ana Lopez</td><td>Dasmariñas</td><td>Double Smash × 2</td><td style="color:var(--orange);font-weight:800;">₱350</td><td>Cash</td><td><span class="status-pill pill-preparing">Preparing</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button><button class="btn-sm btn-done" onclick="showToast('Marked as delivered!','green')">Done</button></div></td></tr>
+                <tr><td>#ORD-005</td><td>Carlo Bautista</td><td>Imus, Cavite</td><td>Chicken Wings, Drinks</td><td style="color:var(--orange);font-weight:800;">₱560</td><td>Cash</td><td><span class="status-pill pill-delivered">Delivered</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button></div></td></tr>
+                <tr><td>#ORD-006</td><td>Liza Reyes</td><td>General Trias</td><td>Pizza × 1, Cake × 1</td><td style="color:var(--orange);font-weight:800;">₱300</td><td>GCash</td><td><span class="status-pill pill-cancelled">Cancelled</span></td><td><div class="order-action-btns"><button class="btn-sm btn-view" onclick="openOrderModal()">View</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== MENU MANAGEMENT ===== -->
+      <div id="section-menu" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Menu Management</div>
+          <div class="topbar-search">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#555" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="#555" stroke-width="2" stroke-linecap="round"/></svg>
+            <input placeholder="Search menu items...">
+          </div>
+          <button class="topbar-btn" onclick="openModal()">
+            <svg width="14" height="14" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M12 5v14M5 12h14"/></svg>
+            Add Item
+          </button>
+        </div>
+        <div class="content">
+          <div class="filter-bar">
+            <button class="filter-tab active">All</button>
+            <button class="filter-tab" onclick="this.parentNode.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Burgers</button>
+            <button class="filter-tab" onclick="this.parentNode.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Chicken</button>
+            <button class="filter-tab" onclick="this.parentNode.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Drinks</button>
+            <button class="filter-tab" onclick="this.parentNode.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Pizza</button>
+            <button class="filter-tab" onclick="this.parentNode.querySelectorAll('.filter-tab').forEach(b=>b.classList.remove('active'));this.classList.add('active')">Desserts</button>
+          </div>
+          <div class="menu-mgmt-grid">
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1568901346375-23c9450c58cd?w=400&q=80" alt="Classic Burger">
+              <div class="menu-mgmt-body">
+                <h3>Classic Burger</h3>
+                <div class="cat">Burgers · Best Seller</div>
+                <div class="price">₱130</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Classic Burger','130','Burgers')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1553979459-d2229ba7433b?w=400&q=80" alt="Double Smash">
+              <div class="menu-mgmt-body">
+                <h3>Double Smash</h3>
+                <div class="cat">Burgers</div>
+                <div class="price">₱175</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Double Smash','175','Burgers')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1626082927389-6cd097cdc6ec?w=300&q=80" alt="Crispy Chicken">
+              <div class="menu-mgmt-body">
+                <h3>Crispy Chicken</h3>
+                <div class="cat">Chicken</div>
+                <div class="price">₱120</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Crispy Chicken','120','Chicken')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1527477396000-e27163b481c2?w=400&q=80" alt="Chicken Wings">
+              <div class="menu-mgmt-body">
+                <h3>Chicken Wings</h3>
+                <div class="cat">Chicken · Best Seller</div>
+                <div class="price">₱160</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Chicken Wings','160','Chicken')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1558857563-b371033873b8?w=400&q=80" alt="Milk Tea">
+              <div class="menu-mgmt-body">
+                <h3>Milk Tea</h3>
+                <div class="cat">Drinks</div>
+                <div class="price">₱50</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Milk Tea','50','Drinks')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+            <div class="menu-mgmt-card">
+              <img src="https://images.unsplash.com/photo-1513104890138-7c749659a591?w=400&q=80" alt="Pizza">
+              <div class="menu-mgmt-body">
+                <h3>Pizza</h3>
+                <div class="cat">Pizza</div>
+                <div class="price">₱100</div>
+                <div class="menu-card-actions">
+                  <button class="btn-edit" onclick="openModal('Pizza','100','Pizza')">Edit</button>
+                  <button class="btn-delete" onclick="showToast('Item deleted.')">Delete</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== CUSTOMERS ===== -->
+      <div id="section-customers" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Customers</div>
+          <div class="topbar-search">
+            <svg width="16" height="16" fill="none" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7" stroke="#555" stroke-width="2"/><path d="M16.5 16.5 21 21" stroke="#555" stroke-width="2" stroke-linecap="round"/></svg>
+            <input placeholder="Search customers...">
+          </div>
+        </div>
+        <div class="content">
+          <div class="orders-table-wrap">
+            <table>
+              <thead><tr>
+                <th>Customer</th><th>Email</th><th>Phone</th><th>Total Orders</th><th>Total Spent</th><th>Joined</th>
+              </tr></thead>
+              <tbody>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#e74c3c;">J</div>Juan Dela Cruz</td><td>juan@email.com</td><td>09171234567</td><td style="font-weight:800;">12</td><td style="color:var(--orange);font-weight:800;">₱4,680</td><td style="color:var(--muted);">Jan 2025</td></tr>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#8e44ad;">M</div>Maria Santos</td><td>maria@email.com</td><td>09281234567</td><td style="font-weight:800;">8</td><td style="color:var(--orange);font-weight:800;">₱3,920</td><td style="color:var(--muted);">Feb 2025</td></tr>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#2980b9;">P</div>Pedro Reyes</td><td>pedro@email.com</td><td>09391234567</td><td style="font-weight:800;">5</td><td style="color:var(--orange);font-weight:800;">₱4,450</td><td style="color:var(--muted);">Mar 2025</td></tr>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#27ae60;">A</div>Ana Lopez</td><td>ana@email.com</td><td>09451234567</td><td style="font-weight:800;">15</td><td style="color:var(--orange);font-weight:800;">₱5,250</td><td style="color:var(--muted);">Jan 2025</td></tr>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#f39c12;">C</div>Carlo Bautista</td><td>carlo@email.com</td><td>09561234567</td><td style="font-weight:800;">3</td><td style="color:var(--orange);font-weight:800;">₱1,680</td><td style="color:var(--muted);">Apr 2025</td></tr>
+                <tr class="customer-row"><td><div class="cust-avatar" style="background:#e67e22;">L</div>Liza Reyes</td><td>liza@email.com</td><td>09671234567</td><td style="font-weight:800;">7</td><td style="color:var(--orange);font-weight:800;">₱2,940</td><td style="color:var(--muted);">Mar 2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== FEEDBACK ===== -->
+      <div id="section-feedback" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Customer Feedback</div>
+        </div>
+        <div class="content">
+          <div class="feedback-card">
+            <div class="cust-avatar" style="background:#e74c3c;width:46px;height:46px;font-size:1rem;flex-shrink:0;">J</div>
+            <div class="feedback-body">
+              <div class="feedback-meta">
+                <span class="feedback-name">Juan Dela Cruz</span>
+                <span class="stars">★★★★★</span>
+                <span class="feedback-time">2 hours ago</span>
+              </div>
+              <div class="feedback-text">Sobrang sarap ng Classic Burger! Mabilis pa ang delivery. Siguradong babalik ako! 🔥</div>
+            </div>
+          </div>
+          <div class="feedback-card">
+            <div class="cust-avatar" style="background:#8e44ad;width:46px;height:46px;font-size:1rem;flex-shrink:0;">M</div>
+            <div class="feedback-body">
+              <div class="feedback-meta">
+                <span class="feedback-name">Maria Santos</span>
+                <span class="stars">★★★★<span style="color:#555;">★</span></span>
+                <span class="feedback-time">5 hours ago</span>
+              </div>
+              <div class="feedback-text">Great food! The milk tea was perfect. Delivery was a bit late but the food was still hot when it arrived. Would recommend!</div>
+            </div>
+          </div>
+          <div class="feedback-card">
+            <div class="cust-avatar" style="background:#2980b9;width:46px;height:46px;font-size:1rem;flex-shrink:0;">P</div>
+            <div class="feedback-body">
+              <div class="feedback-meta">
+                <span class="feedback-name">Pedro Reyes</span>
+                <span class="stars">★★★<span style="color:#555;">★★</span></span>
+                <span class="feedback-time">Yesterday</span>
+              </div>
+              <div class="feedback-text">Pizza was good but sana mas maraming toppings. Chicken Wings was the highlight — crispy and flavorful. Will try other items next time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== SETTINGS ===== -->
+      <div id="section-settings" style="display:none;">
+        <div class="topbar">
+          <div class="topbar-title">Settings</div>
+          <button class="topbar-btn" onclick="showToast('Settings saved!','green')">Save Changes</button>
+        </div>
+        <div class="content">
+          <div class="settings-grid">
+            <div class="card">
+              <div class="card-header"><span class="card-title">Store Settings</span></div>
+              <div class="card-body">
+                <div class="settings-section-title">🏪 General</div>
+                <div class="form-group" style="margin-bottom:14px;">
+                  <label style="font-size:0.78rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Store Name</label>
+                  <input type="text" value="Medyo Fast Food" style="width:100%;background:#2e2e2e;border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:white;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;">
+                </div>
+                <div class="form-group" style="margin-bottom:14px;">
+                  <label style="font-size:0.78rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Delivery Fee (₱)</label>
+                  <input type="number" value="49" style="width:100%;background:#2e2e2e;border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:white;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;">
+                </div>
+                <div class="form-group">
+                  <label style="font-size:0.78rem;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;display:block;margin-bottom:6px;">Minimum Order (₱)</label>
+                  <input type="number" value="100" style="width:100%;background:#2e2e2e;border:1px solid var(--border);border-radius:8px;padding:11px 14px;color:white;font-family:'Nunito',sans-serif;font-size:0.95rem;outline:none;">
+                </div>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-header"><span class="card-title">Notifications &amp; Features</span></div>
+              <div class="card-body">
+                <div class="settings-section-title">🔔 Toggles</div>
+                <div class="toggle-row">
+                  <div><div class="toggle-label">Online Ordering</div><div class="toggle-sub">Accept orders from the website</div></div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div><div class="toggle-label">GCash Payments</div><div class="toggle-sub">Enable GCash as payment method</div></div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div><div class="toggle-label">Email Notifications</div><div class="toggle-sub">Get notified on new orders</div></div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div><div class="toggle-label">Customer Reviews</div><div class="toggle-sub">Allow customers to leave feedback</div></div>
+                  <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+                </div>
+                <div class="toggle-row">
+                  <div><div class="toggle-label">Maintenance Mode</div><div class="toggle-sub">Temporarily close the store</div></div>
+                  <div class="toggle" onclick="this.classList.toggle('on')"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- end main-content -->
+  </div><!-- end admin-layout -->
+</div><!-- end page-admin -->
+
+<script src="admin.js"></script>
+</body>
+</html>
