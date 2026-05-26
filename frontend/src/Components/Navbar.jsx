@@ -13,7 +13,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Logo from "../assets/logo.jpeg";
 import { useAuthStore } from "../Store/useAuthStore";
 // useCart from CartPage — single localStorage-based cart used across the whole app
-import { useCart } from "../pages/CartPage";
+import { useCart } from "../Pages/CartPage";
 import { TfiAlignJustify } from "react-icons/tfi";
 import { FaShoppingCart, FaUserCircle } from "react-icons/fa";
 import { RiLogoutBoxFill } from "react-icons/ri";

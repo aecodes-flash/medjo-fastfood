@@ -6,7 +6,7 @@ import { MdOutlineAddCircle }  from "react-icons/md";
 import { BsCreditCard2Back }   from "react-icons/bs";
 import { RiLogoutBoxRFill }    from "react-icons/ri";
 import { IoSettingsSharp }     from "react-icons/io5";
-import {useAuthStore }           from "../../store/useAuthStore";
+import {useAuthStore }           from "../../Store/useAuthStore";
 import { MdRateReview } from "react-icons/md";
 
 const NAV = [

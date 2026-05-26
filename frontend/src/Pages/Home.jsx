@@ -10,7 +10,7 @@ import chicken1 from '../assets/chicken1.jpg'
 import burger2 from'../assets/burger2.png'
 import hotdeals from '../assets/hotdeals.jpg'
 import hotdeals1 from '../assets/hotdeals1.jpg'
-import Navbar from '../components/Navbar'
+import Navbar from '../Components/Navbar'
 import { FaFacebook } from "react-icons/fa";
 import { FaTwitter } from "react-icons/fa";
 import { BsInstagram } from "react-icons/bs";

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../Store/useAuthStore";
 
 // This hook checks if user is logged in
 // If not → shows the modal

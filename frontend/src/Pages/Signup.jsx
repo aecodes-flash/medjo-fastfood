@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom"
 import { useForm } from "react-hook-form"
 import logo from "../assets/logo.jpeg"
-import { useAuthStore } from "../store/useAuthStore"
+import { useAuthStore } from "../Store/useAuthStore"
 
 export default function Signup() {
   const { register, handleSubmit, formState: { errors } } = useForm()

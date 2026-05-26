@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuthStore } from "../../store/useAuthStore";
-import StatCard    from "../../components/admin/StatCard";
-import OrdersTable from "../../components/admin/OrdersTable";
+import { useAuthStore } from "../../Store/useAuthStore";
+import StatCard    from "../../Components/admin/StatCard";
+import OrdersTable from "../../Components/admin/OrdersTable";
 
 const API = "http://localhost:5001/api";
 

@@ -1,6 +1,6 @@
 // ─── AuthModal.jsx ────────────────────────────────────────────
 import { useState } from "react";
-import { useAuthStore } from "../store/useAuthStore";
+import { useAuthStore } from "../Store/useAuthStore";
 import { useNavigate } from "react-router-dom";  // ← add this
 import toast from "react-hot-toast";
 import logo from "../assets/logo.jpeg";

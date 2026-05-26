@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '../Store/useAuthStore'
-import Navbar from '../components/Navbar'
+import Navbar from '../Components/Navbar'
 import { FaUserCircle } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 import axios from 'axios'

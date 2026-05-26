@@ -20,9 +20,9 @@
 
 import { useState, useRef }                        from 'react'
 import { useNavigate }                             from 'react-router-dom'
-import Navbar                                      from '../components/Navbar'
+import Navbar                                      from '../Components/Navbar'
 import { useCart }                                 from './CartPage'
-import { useAuthStore }                            from '../store/useAuthStore'
+import { useAuthStore }                            from '../Store/useAuthStore'
 import { FaCheckCircle, FaMobileAlt, FaMoneyBillWave } from 'react-icons/fa'
 import axios                                       from 'axios'
 import toast                                       from 'react-hot-toast'

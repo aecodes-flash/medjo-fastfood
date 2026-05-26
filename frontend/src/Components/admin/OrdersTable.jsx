@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore } from "../../Store/useAuthStore";
 import toast from "react-hot-toast";
 
 const API = "http://localhost:5001/api";

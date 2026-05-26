@@ -9,10 +9,10 @@
 
 import { useState, useEffect } from "react";
 import { useLocation }         from "react-router-dom";
-import Navbar                  from "../components/Navbar";
+import Navbar                  from "../Components/Navbar";
 import { useCart }             from "./CartPage";
-import { useRequireAuth }      from "../hooks/useRequireAuth";
-import AuthModal               from "../components/AuthModal";
+import { useRequireAuth }      from "../Hooks/useRequireAuth";
+import AuthModal               from "../Components/AuthModal";
 import toast                   from "react-hot-toast";
 import axios                   from "axios";
 

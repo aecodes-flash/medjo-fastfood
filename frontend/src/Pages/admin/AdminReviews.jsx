@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
-import { useAuthStore } from "../../store/useAuthStore";
+import { useAuthStore } from "../../Store/useAuthStore";
 import { useOutletContext } from "react-router-dom";
 
 const API = "http://localhost:5001/api";

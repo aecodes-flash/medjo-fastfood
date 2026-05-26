@@ -14,12 +14,12 @@
 
 import { useState }                from 'react'
 import { useNavigate }             from 'react-router-dom'
-import Navbar                      from '../components/Navbar'
-import { useAuthStore }            from '../store/useAuthStore'
+import Navbar                      from '../Components/Navbar'
+import { useAuthStore }            from '../Store/useAuthStore'
 import { FaTrash, FaShoppingCart } from 'react-icons/fa'
 import toast                       from 'react-hot-toast'
-import Checkout from '../pages/Checkout'
-import MenuPage from '../pages/MenuPage'
+import Checkout from '../Pages/Checkout'
+import MenuPage from '../Pages/MenuPage'
 
 // ─────────────────────────────────────────────────────────────
 // useCart — exported so Navbar, MenuPage, Checkout can import:
