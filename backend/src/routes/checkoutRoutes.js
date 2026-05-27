@@ -1,6 +1,6 @@
 import express from "express";
 import { submitPayment, getPaymentByOrder, getAllPayments, updatePaymentStatus } from "../controllers/checkoutController.js";
-import { authMiddleware, adminMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware, adminMiddleware } from "../Middleware/authMiddleware.js";
 
 const router = express.Router();
 

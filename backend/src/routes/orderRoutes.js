@@ -7,7 +7,7 @@ import {
   cancelOrder,
   getAllOrders,
 } from "../controllers/orderController.js";
-import { authMiddleware } from "../middleware/authMiddleware.js";
+import { authMiddleware } from "../Middleware/authMiddleware.js";
 import { orderLimiter } from "../Middleware/rateLimiter.js";
 import { verifyToken, isAdmin } from "../Middleware/adminMiddleware.js";
 
