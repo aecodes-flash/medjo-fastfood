@@ -6,7 +6,7 @@ import Navbar                          from '../Components/Navbar'
 import axios                           from 'axios'
 import toast                           from 'react-hot-toast'
 
-const API = import.meta.env.VITE_API_URL + "/api"
+const API = import.meta.env.VITE_API_URL
 
 const ReviewPage = () => {
   const { orderId }  = useParams()
@@ -29,10 +29,10 @@ const ReviewPage = () => {
     try {
       const currentToken = token || localStorage.getItem('token')
       await axios.post(
-        `${API}/api/reviews`,
-        { orderId, rating, comment },
-        { headers: { Authorization: `Bearer ${currentToken}` } }
-      )
+      `${API}/api/reviews`,
+      { orderId, rating, comment },
+      { headers: { Authorization: `Bearer ${currentToken}` } }
+    )
       toast.success('Review submitted! Thank you! 🍔')
       navigate('/orders')
     } catch (error) {
