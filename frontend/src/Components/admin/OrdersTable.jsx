@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useAuthStore } from "../../Store/useAuthStore";
 import toast from "react-hot-toast";
-import API from '../config/api'
+
 
 const API = import.meta.env.VITE_API_URL + "/api"
 

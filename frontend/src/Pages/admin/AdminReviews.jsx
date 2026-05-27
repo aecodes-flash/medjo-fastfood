@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import { useAuthStore } from "../../Store/useAuthStore";
 import { useOutletContext } from "react-router-dom";
-import API from '../config/api'
 
 const API = import.meta.env.VITE_API_URL + "/api"
 

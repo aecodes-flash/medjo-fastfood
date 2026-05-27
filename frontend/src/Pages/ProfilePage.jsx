@@ -5,7 +5,6 @@ import Navbar from '../Components/Navbar'
 import { FaUserCircle } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 import axios from 'axios'
-import API from '../config/api'
 
 const API = import.meta.env.VITE_API_URL + "/api"
 
