@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import AdminSidebar from "../../Components/admin/AdminSidebar";
-import AdminNavbar  from "../../Components/admin/AdminNavbar";
+import AdminNavbar  from "../../Components/admin/Adminnavbar";
 
 const TITLES = {
   "/admin":          "Dashboard",

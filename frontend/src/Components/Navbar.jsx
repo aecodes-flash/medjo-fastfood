@@ -10,7 +10,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/logo.jpeg";
+import Logo from "../assets/Logo.jpeg";
 import { useAuthStore } from "../Store/useAuthStore";
 // useCart from CartPage — single localStorage-based cart used across the whole app
 import { useCart } from "../Pages/CartPage";

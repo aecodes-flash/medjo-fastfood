@@ -13,7 +13,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../Store/useAuthStore";
-import logo from "../assets/logo.jpeg";
+import logo from "../assets/Logo.jpeg";
 import toast from "react-hot-toast";
 
 export default function LoginPage() {
