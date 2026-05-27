@@ -36,6 +36,8 @@ app.use(cors({
   ],
   credentials: true
 }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // ── Serve static images ──────────────────────────────────────
 // Place your food images in: backend/public/images/
