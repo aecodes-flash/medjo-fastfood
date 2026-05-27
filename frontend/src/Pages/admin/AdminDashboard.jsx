@@ -3,8 +3,9 @@ import axios from "axios";
 import { useAuthStore } from "../../Store/useAuthStore";
 import StatCard    from "../../Components/admin/Statcard";
 import OrdersTable from "../../Components/admin/OrdersTable";
+import API from '../config/api'
 
-const API = "http://localhost:5001/api";
+const API = import.meta.env.VITE_API_URL + "/api"
 
 export default function AdminDashboard() {
   const token = useAuthStore(s => s.token);

@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useAuthStore } from "../../Store/useAuthStore";
 import toast from "react-hot-toast";
+import API from '../config/api'
 
-const API = "http://localhost:5001/api";
+const API = import.meta.env.VITE_API_URL + "/api"
 
 const STATUS_STYLE = {
   Pending:  "bg-white/10 text-zinc-400",

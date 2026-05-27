@@ -5,8 +5,9 @@ import Navbar from '../Components/Navbar'
 import { FaUserCircle } from 'react-icons/fa'
 import toast from 'react-hot-toast'
 import axios from 'axios'
+import API from '../config/api'
 
-const API = 'http://localhost:5001/api'
+const API = import.meta.env.VITE_API_URL + "/api"
 
 export default function ProfilePage() {
   const { user, token, logout } = useAuthStore()

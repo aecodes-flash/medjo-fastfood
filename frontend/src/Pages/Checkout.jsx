@@ -27,8 +27,9 @@ import { FaCheckCircle, FaMobileAlt, FaMoneyBillWave } from 'react-icons/fa'
 import axios                                       from 'axios'
 import toast                                       from 'react-hot-toast'
 import gcashQR from '../assets/gcashQR.jpg'
+import API from '../config/api'
 
-const API          = 'http://localhost:5001/api'
+const API = import.meta.env.VITE_API_URL + "/api"
 const DELIVERY_FEE = 49
 
 export default function Checkout() {

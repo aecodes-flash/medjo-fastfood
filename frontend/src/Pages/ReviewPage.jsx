@@ -5,6 +5,9 @@ import StarRating                      from '../Components/StarRating'
 import Navbar                          from '../Components/Navbar'
 import axios                           from 'axios'
 import toast                           from 'react-hot-toast'
+import API from '../config/api'
+
+const API = import.meta.env.VITE_API_URL + "/api"
 
 const ReviewPage = () => {
   const { orderId }  = useParams()
@@ -27,7 +30,7 @@ const ReviewPage = () => {
     try {
       const currentToken = token || localStorage.getItem('token')
       await axios.post(
-        'http://localhost:5001/api/reviews',
+        `${API}/api/reviews`,
         { orderId, rating, comment },
         { headers: { Authorization: `Bearer ${currentToken}` } }
       )
@@ -37,6 +40,7 @@ const ReviewPage = () => {
       toast.error(error.response?.data?.message || 'Failed to submit review')
     }
   }
+
 
   return (
     <div className='min-h-screen bg-[#1a1a1a] flex flex-col'>

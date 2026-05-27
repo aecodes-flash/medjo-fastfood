@@ -5,8 +5,9 @@ import { useAuthStore }        from '../Store/useAuthStore'
 import { useCart }             from '../Pages/CartPage'
 import axios                   from 'axios'
 import toast                   from 'react-hot-toast'
+import API from '../config/api'
 
-const API = 'http://localhost:5001/api'
+const API = import.meta.env.VITE_API_URL + "/api"
 
 const statusConfig = {
   Delivered: { border: 'border-l-[#22c55e]', badge: 'bg-[#22c55e] text-white' },

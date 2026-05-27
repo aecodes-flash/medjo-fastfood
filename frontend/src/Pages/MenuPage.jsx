@@ -16,6 +16,7 @@ import AuthModal               from "../Components/AuthModal";
 import toast                   from "react-hot-toast";
 import axios                   from "axios";
 
+const API = import.meta.env.VITE_API_URL
 const CATEGORIES = ["All", "Burgers", "Chicken", "Drinks", "Pizza", "Cake"];
 
 function MenuPage() {
@@ -33,7 +34,7 @@ function MenuPage() {
     const params = {};
     if (active !== "All") params.category = active;
     if (search) params.search = search;
-    axios.get("http://localhost:5001/api/menu", { params })
+    axios.get(`${API}/api/menu`, { params })
       .then(res => setItems(res.data))
       .catch(() => toast.error("Failed to load menu"));
   }, [active, search]);
@@ -51,9 +52,8 @@ function MenuPage() {
         ...item,
         menuItemId: item._id,
       });
-      // FIX: item.name instead of item.id
       toast.success(`${item.name} added to cart! 🛒`, {
-        id: `cart-${item._id}`,   // ← dedup key: same item = same toast, no stacking
+        id: `cart-${item._id}`,
         style: { background: "#1a1a1a", color: "#fff", border: "1px solid #e87722" },
         iconTheme: { primary: "#e87722", secondary: "#fff" },
       });

@@ -3,8 +3,9 @@ import axios from "axios";
 import { useAuthStore } from "../../Store/useAuthStore";
 import { useOutletContext } from "react-router-dom";
 import toast from "react-hot-toast";
+import API from '../config/api'
 
-const API = "http://localhost:5001/api";
+const API = import.meta.env.VITE_API_URL + "/api"
 
 const TABS = ["All", "Burgers", "Chicken", "Drinks", "Sides"];
 
@@ -120,7 +121,7 @@ export default function AdminMenu() {
             {[
               { label: "Name",        key: "name",        type: "text",   placeholder: "e.g. Classic Burger" },
               { label: "Price (₱)",   key: "price",       type: "number", placeholder: "e.g. 130" },
-              { label: "Image URL",   key: "image",       type: "text",   placeholder: "http://localhost:5001/images/..." },
+              { label: "Image URL", key: "image", type: "text", placeholder: `${import.meta.env.VITE_API_URL}/images/...` },
               { label: "Description", key: "description", type: "text",   placeholder: "Short description" },
             ].map(({ label, key, type, placeholder }) => (
               <div key={key}>
