@@ -17,7 +17,7 @@ import toast                   from "react-hot-toast";
 import axios                   from "axios";
 
 const API = import.meta.env.VITE_API_URL
-const CATEGORIES = ["All", "Burgers", "Chicken", "Drinks", "Pizza", "Cake"];
+const CATEGORIES = ["All", "Burgers", "Chicken", "Drinks", "Pizza", "Cake", "Sides"];
 
 function MenuPage() {
   const location = useLocation();
