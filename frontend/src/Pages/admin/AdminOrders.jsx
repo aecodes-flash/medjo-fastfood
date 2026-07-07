@@ -132,7 +132,7 @@ export default function AdminOrders() {
         <table className="w-full text-sm">
           <thead className="bg-zinc-900 text-left text-xs uppercase text-white">
             <tr>
-              {["Order ID", "Customer", "Email", "Items", "Total", "Status", "Actions"].map(h => (
+              {["Order ID", "Customer", "Email", "Address", "Items", "Total", "Status", "Actions"].map(h => (
                 <th key={h} className="px-4 py-4">{h}</th>
               ))}
             </tr>
@@ -140,13 +140,14 @@ export default function AdminOrders() {
           <tbody>
             {filtered.length === 0 ? (
               <tr>
-                <td colSpan={7} className="px-4 py-8 text-center text-zinc-500">No orders found.</td>
+                <td colSpan={8} className="px-4 py-8 text-center text-zinc-500">No orders found.</td>
               </tr>
             ) : filtered.map(o => (
               <tr key={o._id} className="border-t border-white/10 bg-[#1a1a1a]/40 hover:bg-zinc-800/70">
                 <td className="px-4 py-4 text-white font-mono text-xs">{o._id.slice(-8).toUpperCase()}</td>
                 <td className="px-4 py-4">{o.userId?.username || "Unknown"}</td>
                 <td className="px-4 py-4 text-zinc-400 text-xs">{o.userId?.email || "—"}</td>
+                <td className="px-4 py-4 text-zinc-400 text-xs">{o.address || "—"}</td>
                 <td className="px-4 py-4 text-zinc-300">{o.items?.length} item(s)</td>
                 <td className="px-4 py-4 font-bold text-orange-400">₱{o.totalPrice}</td>
                 <td className="px-4 py-4">
