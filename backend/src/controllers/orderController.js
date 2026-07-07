@@ -24,6 +24,8 @@ export const placeOrder = async (req, res) => {
       userId: req.userId,
       items,
       totalPrice,
+      phone: req.body.phone || "",
+      address: req.body.address || "",
     });
 
     res.status(201).json({ message: "Order placed successfully.", order });

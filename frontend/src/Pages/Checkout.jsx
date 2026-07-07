@@ -153,7 +153,7 @@ export default function Checkout() {
       // totalPrice is calculated server-side: items.reduce(sum + price * qty)
       const res = await axios.post(
         `${API}/orders`,
-        { items: orderItems },
+        { items: orderItems, address, phone },
         { headers: { Authorization: `Bearer ${currentToken}` } }
       )
 

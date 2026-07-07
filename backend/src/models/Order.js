@@ -9,6 +9,8 @@ const orderSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  phone:      { type: String, default: "" },
+  address:    { type: String, default: "" },
   items: [
     {
       menuItemId: { type: mongoose.Schema.Types.ObjectId, ref: "MenuItem", required: true },
