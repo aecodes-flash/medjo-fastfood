@@ -88,6 +88,7 @@ export default function AdminOrders() {
                 ["Customer",  selected.userId?.username || "Unknown"],
                 ["Email",     selected.userId?.email    || "—"],
                 ["Address",   selected.address          || "—"],
+                ["Phone",     selected.phone            || "—"],
                 ["Total",     `₱${selected.totalPrice}`],
               ].map(([label, value]) => (
                 <div key={label} className="flex justify-between">
