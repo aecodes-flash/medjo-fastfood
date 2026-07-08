@@ -26,7 +26,8 @@ import { useAuthStore }                            from '../Store/useAuthStore'
 import { FaCheckCircle, FaMobileAlt, FaMoneyBillWave } from 'react-icons/fa'
 import axios                                       from 'axios'
 import toast                                       from 'react-hot-toast'
-import gcashQR from '../assets/gcashQR.jpg'
+import gcashQR                                     from '../assets/gcashQR.jpg'
+import logo                                        from '../assets/logo.png'
 
 
 const API = import.meta.env.VITE_API_URL + "/api"
@@ -481,8 +482,9 @@ export default function Checkout() {
               sticky top-24 flex flex-col gap-4'>
 
               <div className='flex items-center gap-3'>
-                <div className='w-10 h-10 rounded-full bg-[#1a1a1a] border-2 border-[#E87722]
-                  flex items-center justify-center text-lg'>🍔</div>
+                <div className='w-10 h-10 rounded-full overflow-hidden border-2 border-[#E87722] shrink-0'>
+                  <img src={logo} alt='Logo' className='w-full h-full object-cover' />
+                  </div>
                 <h2 className='text-white font-black text-xl uppercase'>Order Summary</h2>
               </div>
 
