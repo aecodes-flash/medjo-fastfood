@@ -31,8 +31,7 @@ const PORT = process.env.PORT || 5001;
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://6a16755cae444b000867d709--tangerine-tiramisu-e0dc11.netlify.app",
-    "https://tangerine-tiramisu-e0dc11.netlify.app"
+    "https://mernfoodapp12.netlify.app" 
   ],
   credentials: true
 }));
