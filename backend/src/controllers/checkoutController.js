@@ -24,7 +24,8 @@ export const submitPayment = async (req, res) => {
       amount: order.totalPrice,
       reference: reference || "",
     });
-
+      order.paymentMethod = method;
+      await order.save();
     res.status(201).json({ message: "Payment submitted successfully.", payment });
   } catch (error) {
     res.status(500).json({ message: "Failed to submit payment.", error: error.message });

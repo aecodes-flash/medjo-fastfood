@@ -1,6 +1,8 @@
 import Order from "../models/Order.js";
 import Checkout from "../models/Checkout.js";
 
+const DELIVERY_FEE = 49;
+
 export const placeOrder = async (req, res) => {
   try {
     const { items } = req.body;
@@ -18,14 +20,15 @@ export const placeOrder = async (req, res) => {
       }
     }
 
-    const totalPrice = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const itemsTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const totalPrice = itemsTotal + DELIVERY_FEE;
 
     const order = await Order.create({
-      userId: req.userId,
-      items,
-      totalPrice,
-      phone: req.body.phone || "",
-      address: req.body.address || "",
+    userId: req.userId,
+    items,
+    totalPrice,   
+    phone: req.body.phone || "",
+    address: req.body.address || "",
     });
 
     res.status(201).json({ message: "Order placed successfully.", order });

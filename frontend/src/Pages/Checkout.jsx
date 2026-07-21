@@ -86,7 +86,7 @@ export default function Checkout() {
   // ── Checkbox toggle ────────────────────────────────────────
   const toggleCheck = (menuItemId) => {
     setCheckedItems(prev =>
-      prev.includes(menuItemId)
+      prev.includes(menuItemId)                    
         ? prev.filter(id => id !== menuItemId)
         : [...prev, menuItemId]
     )
@@ -162,7 +162,7 @@ export default function Checkout() {
       setSavedTotal(total)            // snapshot before cart is wiped
       clearCart()
       setCartItems([])
-      toast.success('Order placed! Proceed to payment 🍔')
+      toast.success('Order placed! Proceed to payment')
       setStep(2)
     } catch (error) {
       console.error('✗ Order failed:', error.response?.data)

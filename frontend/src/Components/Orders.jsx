@@ -137,26 +137,34 @@ export default function Orders() {
                     {order.items.map((item, i) => (
                       <div key={i} className='flex justify-between text-sm'>
                         <span className='text-[#ccc]'>{item.name} × {item.quantity}</span>
-                        <span className='text-[#E87722] font-bold'>
+                        <span className='text-[#E87722] font-bold text-xl'>
                           ₱{(item.price * item.quantity).toFixed(2)}
-                        </span>
+                        </span> 
                       </div>
                     ))}
                   </div>
 
                   {/* Footer */}
                   <div className='flex items-center justify-between border-t border-[#333] pt-3'>
-                    <div className='flex flex-col'>
+                    <div className='flex flex-col gap-1'>
+                  {/* Date */}
                       <span className='text-[#666] text-xs'>
-                        {new Date(order.createdAt).toLocaleDateString('en-PH', {
-                          year: 'numeric', month: 'short', day: 'numeric',
+                      {new Date(order.createdAt).toLocaleDateString('en-PH', {
+                        year: 'numeric', month: 'short', day: 'numeric',
                           hour: '2-digit', minute: '2-digit'
-                        })}
+                            })}
+                          </span>
+
+                      {/* Grand Total Price */}
+                        <span className='text-[#E87722] font-black text-lg'>
+                      ₱{((order.totalPrice || 0) + 49).toFixed(2)}
                       </span>
-                      <span className='text-[#E87722] font-black text-lg'>
-                        ₱{order.totalPrice?.toFixed(2)}
-                      </span>
-                    </div>
+
+                      {/* Delivery Fee Note */}
+                        <span className='text-[#888] text-[15px]'>
+                            (Includes ₱49.00 Delivery Fee)
+                              </span>
+                        </div>
 
                     <div className='flex gap-2'>
                       {/* Review button — only if delivered */}
@@ -178,12 +186,18 @@ export default function Orders() {
                         </button>
                       )}
 
-                      {/* Reorder button */}
-                      <button
-                        onClick={() => handleReorder(order)}
-                        className='bg-[#E87722] hover:bg-[#c96a10] text-white font-black text-xs px-5 py-2 rounded-lg transition duration-150'>
-                        Reorder
-                      </button>
+                      {/* Reorder button if Delivered or Cancelled*/}
+                      {(order.status === 'Delivered' || order.status === 'Cancelled') && (
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation(); 
+                              console.log("Reorder button clicked for order ID:", order._id);
+                                handleReorder(order);
+                              }}
+                          className='bg-[#E87722] hover:bg-[#c96a10] text-white font-black text-xs px-5 py-2 rounded-lg transition duration-150'>
+                          Reorder
+                        </button>
+                      )}
                     </div>
                   </div>
 
