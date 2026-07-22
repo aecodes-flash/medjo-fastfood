@@ -33,7 +33,7 @@ export default function AdminSidebar() {
       {/* Logo */}
       <div className="flex items-center gap-3 px-5 py-5 border-b border-white/5">
         <img src={Logo} alt="Logo" className="w-9 h-9 rounded-full object-cover" />
-        <span className="font-black text-[#e87722] tracking-widest text-sm uppercase">Medjo Fast Food</span>
+        <span className="font-black text-[#e87722] tracking-widest text-sm uppercase">RAESYN</span>
       </div>
 
       {/* Nav */}
