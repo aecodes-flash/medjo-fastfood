@@ -30,11 +30,11 @@ export default function Home() {
             <div className="relative text-center text-white px-4">
 <h1 className="text-6xl font-black text-white  mb-4 tracking-wide" style={{ fontFamily: 'Impact, "Arial Narrow", sans-serif' }}>THERE IS NO SINCERE LOVE THAN OUR FOOD</h1>              <div className="flex gap-4 justify-center mt-8">
                 <Link to='/cart'
-            className="bg-white/90 hover:bg-orange-500 hover:scale-110 hover:text-white text-black px-13 py-7 rounded-full font-bold transition duration-300">
+            className="bg-white/90 hover:bg-orange-500 hover:scale-110 hover:text-white text-black px-15 py-8 rounded-full font-bold transition duration-300">
             ORDER NOW
                 </Link>
                 <Link to='/menu'
-              className="bg-white/90 hover:bg-orange-500 hover:scale-110 hover:text-white text-black px-9 py-7 rounded-full font-bold transition duration-300">
+              className="bg-white/90 hover:bg-orange-500 hover:scale-110 hover:text-white text-black px-15 py-8 rounded-full font-bold transition duration-300">
                   MORE
                 </Link>
               </div>

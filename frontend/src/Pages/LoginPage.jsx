@@ -73,7 +73,7 @@ export default function LoginPage() {
               className="w-24 h-24 rounded-full object-cover ring-4 ring-[#E87722]"
             />
             <p className="text-white font-black text-center tracking-widest text-sm uppercase">
-              — Medjo Fast Food—
+              —RAESYN—
             </p>
           </div>
           <h1 className="text-white font-black text-3xl uppercase text-center tracking-wider">

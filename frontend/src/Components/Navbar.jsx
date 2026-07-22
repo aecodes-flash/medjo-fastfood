@@ -59,17 +59,16 @@ function Navbar() {
         {/* ── LEFT: Logo + Brand name ──────────────────────── */}
         <div className="flex items-center gap-3 shrink-0">
           <Link to="/">
-            <img
-              src={Logo}
-              alt="Medjo Fast Food"
-              className="w-10 h-10 object-cover rounded-full ring-2 ring-[#e07b20]"
-            />
+          <img
+          src={Logo}
+          alt="RAESYN"
+          className="w-10 h-10 object-cover rounded-full ring-2 ring-[#e07b20] transition-all duration-300 hover:scale-105 hover:ring-[#ff9838] hover:shadow-lg hover:shadow-[#e07b20]/ cursor-pointer"/>
           </Link>
 
           <Link
             to="/"
-            className="text-[#e07b20] text-lg font-black uppercase tracking-wider hidden sm:block hover:opacity-80 transition">
-            Medjo FastFood
+            className="text-[#e07b20] text-3xl font-serif uppercase tracking-wider hidden sm:block hover:opacity-80 transition">
+            RAESYN
           </Link>
         </div>
 
