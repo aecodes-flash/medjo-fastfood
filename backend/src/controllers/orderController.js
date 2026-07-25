@@ -1,7 +1,5 @@
 import Order from "../models/Order.js";
 import Checkout from "../models/Checkout.js";
-import MenuItem from "../models/MenuItem.js";
-import Inventory from "../models/Inventory.js";
 
 const DELIVERY_FEE = 49;
 
@@ -22,16 +20,6 @@ export const placeOrder = async (req, res) => {
       }
     }
 
-    // Stock check — only blocks items that are actually linked to inventory
-    for (const item of items) {
-      const menuItem = await MenuItem.findById(item.menuItemId).populate("inventoryItem");
-      if (menuItem?.inventoryItem && menuItem.inventoryItem.quantity < item.quantity) {
-        return res.status(400).json({
-          message: `Sorry, ${item.name} only has ${menuItem.inventoryItem.quantity} left in stock.`
-        });
-      }
-    }
-
   const itemsTotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
   const totalPrice = itemsTotal + DELIVERY_FEE;
 
@@ -43,16 +31,6 @@ export const placeOrder = async (req, res) => {
     address: req.body.address || "",
     paymentMethod: req.body.paymentMethod || "cash",
     });
-
-    // Deduct stock — only after the order is successfully created
-    for (const item of items) {
-      const menuItem = await MenuItem.findById(item.menuItemId);
-      if (menuItem?.inventoryItem) {
-        await Inventory.findByIdAndUpdate(menuItem.inventoryItem, {
-          $inc: { quantity: -item.quantity }
-        });
-      }
-    }
 
     res.status(201).json({ message: "Order placed successfully.", order });
   } catch (error) {
@@ -130,16 +108,6 @@ export const cancelOrder = async (req, res) => {
 
     order.status = "Cancelled";
     await order.save();
-
-    // Restore stock — the deduction in placeOrder needs to be undone on cancellation
-    for (const item of order.items) {
-      const menuItem = await MenuItem.findById(item.menuItemId);
-      if (menuItem?.inventoryItem) {
-        await Inventory.findByIdAndUpdate(menuItem.inventoryItem, {
-          $inc: { quantity: item.quantity }
-        });
-      }
-    }
 
     // Sync — also reject the linked payment if one exists
     await Checkout.findOneAndUpdate(
