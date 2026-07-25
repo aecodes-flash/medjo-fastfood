@@ -2,14 +2,26 @@ import { create } from "zustand";
 import axios from "axios";
 import toast from "react-hot-toast";
 
-const API = import.meta.env.VITE_API_URL + "/api"
+const API = import.meta.env.VITE_API_URL + "/api";
+
+// Helper to safely parse user from localStorage
+const getSavedUser = () => {
+  try {
+    const user = localStorage.getItem("user");
+    return user ? JSON.parse(user) : null;
+  } catch (error) {
+    console.error("Failed to parse user from localStorage:", error);
+    localStorage.removeItem("user");
+    return null;
+  }
+};
 
 export const useAuthStore = create((set) => ({
 
   // ── Rehydrate from localStorage on page refresh ──────────
   // Reads saved user + token so login persists after refresh
-  user:      JSON.parse(localStorage.getItem("user")) || null,
-  token:     localStorage.getItem("token")            || null,
+  user:      getSavedUser(), // FIXED: Safely parsed to avoid JSON crash
+  token:     localStorage.getItem("token") || null,
   isLoading: false,
 
   // ─── REGISTER ─────────────────────────────────────────────
@@ -19,18 +31,18 @@ export const useAuthStore = create((set) => ({
       const res = await axios.post(`${API}/auth/register`, {
         username,
         email,
-        password,
         phone,
         homeAddress,
+        password
       });
 
       // Save token AND user object so both survive a refresh
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user",  JSON.stringify(res.data.user));
+      if (res.data.token) localStorage.setItem("token", res.data.token);
+      if (res.data.user)  localStorage.setItem("user", JSON.stringify(res.data.user));
 
       set({
-        user:      res.data.user,
-        token:     res.data.token,
+        user:      res.data.user || null,
+        token:     res.data.token || null,
         isLoading: false,
       });
 
@@ -60,16 +72,16 @@ export const useAuthStore = create((set) => ({
       });
 
       // Save token AND user object so both survive a refresh
-      localStorage.setItem("token", res.data.token);
-      localStorage.setItem("user",  JSON.stringify(res.data.user));
+      if (res.data.token) localStorage.setItem("token", res.data.token);
+      if (res.data.user)  localStorage.setItem("user", JSON.stringify(res.data.user));
 
       set({
-        user:      res.data.user,
-        token:     res.data.token,
+        user:      res.data.user || null,
+        token:     res.data.token || null,
         isLoading: false,
       });
 
-      toast.success(`Welcome back, ${res.data.user.username}! 🍔`);
+      toast.success(`Welcome back, ${res.data.user?.username || 'user'}! 🍔`);
 
     } catch (error) {
       // 429 = authLimiter triggered (10 attempts per 15 min)

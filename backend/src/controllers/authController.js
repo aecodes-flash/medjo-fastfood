@@ -6,9 +6,9 @@ import jwt from "jsonwebtoken";
 export const register = async (req, res) => {
   try {
     // 1. Get the data the user typed in the form
-    const { username, email, password } = req.body;
+    const { username, email, password, phone, homeAddress } = req.body;
 
-    if (!username || !email || !password) {
+    if (!username || !email || !password || !phone || !homeAddress) {
       return res.status(400).json({ message: "All fields are required." });
     }
     if (password.length < 8) {
@@ -30,7 +30,9 @@ export const register = async (req, res) => {
     const newUser = await User.create({
       username,
       email,
-      password: hashedPassword, // save hashed, never plain text
+      password: hashedPassword,
+      phone,
+      homeAddress
     });
 
     // 5. Create a JWT token for the new user
@@ -49,6 +51,8 @@ export const register = async (req, res) => {
         username: newUser.username,
         email: newUser.email,
         role: newUser.role,
+        phone: newUser.phone,
+        homeAddress: newUser.homeAddress,
       }
     });
 
