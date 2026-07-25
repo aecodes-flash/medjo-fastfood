@@ -3,30 +3,36 @@ import MenuItem from "../models/MenuItem.js";
 // GET /api/menu?search=burger&category=Burgers
 export const getAllMenuItems = async (req, res) => {
   try {
-    // Get search query and category from URL params
-    // Example: /api/menu?search=burger&category=Burgers
     const { search, category } = req.query;
 
-    // Build the filter object dynamically
     let filter = {};
-
-    // If search query exists → search in name and description
     if (search) {
       filter.$or = [
-        { name: { $regex: search, $options: "i" } },        // "i" = case insensitive
-        { description: { $regex: search, $options: "i" } },  // searches description too
+        { name: { $regex: search, $options: "i" } },
+        { description: { $regex: search, $options: "i" } },
       ];
     }
-
-    // If category exists → filter by category
     if (category && category !== "All") {
       filter.category = category;
     }
 
-    // Find items matching the filter
-    const menuItems = await MenuItem.find(filter);
+    // .populate pulls in the linked Inventory doc so we can read its quantity
+    const menuItems = await MenuItem.find(filter).populate('inventoryItem');
 
-    res.status(200).json(menuItems);
+    // attach inStock/stockQty, then strip inventoryItem so we don't leak cost price etc. to customers
+    const withStock = menuItems.map(item => {
+      const obj = item.toObject();
+      if (obj.inventoryItem) {
+        obj.inStock = obj.inventoryItem.quantity > 0;
+        obj.stockQty = obj.inventoryItem.quantity;
+      } else {
+        obj.inStock = true; // not linked to inventory — always orderable
+      }
+      delete obj.inventoryItem;
+      return obj;
+    });
+
+    res.status(200).json(withStock);
 
   } catch (error) {
     console.error("Get menu error:", error);
