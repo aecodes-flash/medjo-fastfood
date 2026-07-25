@@ -13,13 +13,15 @@ export const useAuthStore = create((set) => ({
   isLoading: false,
 
   // ─── REGISTER ─────────────────────────────────────────────
-  register: async (username, email, password) => {
+  register: async (username, email, password, phone, homeAddress) => {
     set({ isLoading: true });
     try {
       const res = await axios.post(`${API}/auth/register`, {
         username,
         email,
         password,
+        phone,
+        homeAddress,
       });
 
       // Save token AND user object so both survive a refresh
