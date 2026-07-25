@@ -10,7 +10,7 @@
 
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import Logo from "../assets/Logo.jpeg";
+import Logo from "../assets/logo.png";
 import { useAuthStore } from "../Store/useAuthStore";
 // useCart from CartPage — single localStorage-based cart used across the whole app
 import { useCart } from "../Pages/CartPage";
@@ -42,14 +42,13 @@ function Navbar() {
     navigate("/login");
     setMenuOpen(false);
   };
- 
   // Nav links shown inside the hamburger dropdown
   const navLinks = [
-    { to: "/",       label: "🏠 Home"   },
-    { to: "/menu",   label: "🍔 Menu"   },
-    { to: "/cart",   label: `🛒 Cart${cartCount > 0 ? ` (${cartCount})` : ""}` },
-    { to: "/orders", label: "📦 Orders" },
-    ...(user ? [{ to: "/profile", label: "👤 Profile" }] : []),
+    { to: "/",       label: " Home"   },
+    { to: "/menu",   label: " Menu"   },
+    { to: "/cart",   label: ` Cart${cartCount > 0 ? ` (${cartCount})` : ""}` },
+    { to: "/orders", label: " Orders" },
+    ...(user ? [{ to: "/profile", label: " Profile" }] : []),
   ];
 
   return (
@@ -62,13 +61,13 @@ function Navbar() {
           <img
           src={Logo}
           alt="RAESYN"
-          className="w-10 h-10 object-cover rounded-full ring-2 ring-[#e07b20] transition-all duration-300 hover:scale-105 hover:ring-[#ff9838] hover:shadow-lg hover:shadow-[#e07b20]/ cursor-pointer"/>
+          className="w-10 h-10 object-cover rounded-full ring-2 transition-all duration-300 hover:scale-105 hover:ring-[#ff9838] hover:shadow-lg hover:shadow-[#e07b20]/ cursor-pointer"/>
           </Link>
 
           <Link
             to="/"
-            className="text-[#e07b20] text-3xl font-serif uppercase tracking-wider hidden sm:block hover:opacity-80 transition">
-            RAESYN
+            className="text-[#e07b20] text-2xl font-serif uppercase tracking-wider hidden sm:block hover:opacity-80 transition">
+            (Your Business Name)
           </Link>
         </div>
 

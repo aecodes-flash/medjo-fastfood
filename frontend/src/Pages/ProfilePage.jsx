@@ -16,6 +16,8 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(false)
   const [username, setUsername] = useState(user?.username || '')
   const [email, setEmail]       = useState(user?.email    || '')
+  const [phone, setPhone]       = useState(user?.phone    || '')
+  const [homeAddress, setHomeAddress] = useState(user?.homeAddress || '')
 
   const handleLogout = () => {
     logout()
@@ -27,12 +29,17 @@ export default function ProfilePage() {
       toast.error('Username and email cannot be empty!')
       return
     }
+    const res = await axios.put(
+      `${API}/profile`,
+      { username, email, phone, homeAddress },
+      { headers: { Authorization: `Bearer ${token}` } }
+    )
 
     setIsLoading(true)
     try {
       const res = await axios.put(
         `${API}/profile`,
-        { username, email },
+        { username, email, phone, homeAddress },
         { headers: { Authorization: `Bearer ${token}` } }
       )
 
@@ -92,6 +99,21 @@ export default function ProfilePage() {
               />
             </div>
           </div>
+          <div>
+  <label className='text-[#aaa] text-sm mb-1 block'>Phone Number</label>
+  <input type='text' value={phone}
+    onChange={e => setPhone(e.target.value)}
+    disabled={!isEditing}
+    className='w-full bg-[#191818] text-white px-5 py-3 rounded-lg outline-none focus:ring-2 focus:ring-[#E87722] disabled:opacity-50' />
+</div>
+
+<div>
+  <label className='text-[#aaa] text-sm mb-1 block'>Home Address</label>
+  <input type='text' value={homeAddress}
+    onChange={e => setHomeAddress(e.target.value)}
+    disabled={!isEditing}
+    className='w-full bg-[#191818] text-white px-5 py-3 rounded-lg outline-none focus:ring-2 focus:ring-[#E87722] disabled:opacity-50' />
+</div>
 
           {/* Buttons */}
           {isEditing ? (

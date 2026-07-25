@@ -40,11 +40,6 @@ app.use(cors({
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// ── Serve static images ──────────────────────────────────────
-// Place your food images in: backend/public/images/
-// Access them at: http://localhost:5001/images/burger1.png
-app.use("/images", express.static(path.join(__dirname, "../public/images")));
-
 // General rate limiter on all routes
 app.use(generalLimiter);
 
@@ -56,6 +51,7 @@ app.use("/api/reviews",  reviewRoutes);   // /api/reviews, /api/reviews/:orderId
 app.use("/api/profile",  profileRoutes);  // /api/profile
 app.use("/api/checkout", checkoutRoutes); // /api/checkout, /api/checkout/order/:orderId
 app.use("/api/settings", settingsRoutes); // GET and UPDATE settings
+app.use("/images", express.static(path.join(__dirname, "../public/images")));
 
 
 // 404 handler

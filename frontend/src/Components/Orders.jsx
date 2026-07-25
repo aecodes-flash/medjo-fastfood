@@ -52,7 +52,8 @@ export default function Orders() {
         name:       item.name,
         price:      item.price,
         quantity:   1,
-        img:        item.image || '',
+        img:        item.img || item.image,
+        image:      item.img || item.image,
       })
     })
     toast.success('Items added to cart! 🍔')
@@ -124,7 +125,7 @@ export default function Orders() {
                     <div className='flex flex-col'>
                       <span className='text-[#aaa] text-xs uppercase tracking-widest'>Order ID</span>
                       <span className='text-white font-bold text-sm'>
-                        #{order._id.slice(-8).toUpperCase()}
+                        {order._id.slice(-8).toUpperCase()}
                       </span>
                     </div>
                     <span className={`px-4 py-1.5 rounded-full font-black text-xs ${config.badge}`}>
@@ -191,7 +192,7 @@ export default function Orders() {
                         <button
                           onClick={(e) => {
                             e.stopPropagation(); 
-                              console.log("Reorder button clicked for order ID:", order._id);
+                              console.log("Reorder button clicked for order ID:", order._id, "with images:", order.items.map(item => item.img || item.image));
                                 handleReorder(order);
                               }}
                           className='bg-[#E87722] hover:bg-[#c96a10] text-white font-black text-xs px-5 py-2 rounded-lg transition duration-150'>

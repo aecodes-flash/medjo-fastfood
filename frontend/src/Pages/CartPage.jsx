@@ -21,13 +21,6 @@ import toast                       from 'react-hot-toast'
 import Checkout from '../Pages/Checkout'
 import MenuPage from '../Pages/MenuPage'
 
-// ─────────────────────────────────────────────────────────────
-// useCart — exported so Navbar, MenuPage, Checkout can import:
-//   import { useCart } from '../pages/CartPage'
-//
-// localStorage is the cart store — survives page refreshes.
-// When backend is ready: swap localStorage with /api/cart calls.
-// ─────────────────────────────────────────────────────────────
 export function useCart() {
   // Read cart from localStorage — filters out stale items with invalid menuItemIds
   // (items added before backend was connected had numeric ids like 2, 3 — unusable)
@@ -51,25 +44,27 @@ export function useCart() {
   // Add item or increment qty if already in cart
   // item shape: { menuItemId, name, price, img? }
   const addToCart = (item) => {
-    const cart = getCart()
+  const cart = getCart()
 
-    // menuItemId = real MongoDB _id (from GET /api/menu response)
-    // id         = numeric fallback from local FoodCard.js data
-    // We normalise to always store as menuItemId so Checkout can send it to the backend
-    const itemId   = item._id || item.menuItemId || item.id
-    const existing = cart.find((i) => (i.menuItemId || i.id) === itemId)
+  const itemId   = item._id || item.menuItemId || item.id
+  const existing = cart.find((i) => (i.menuItemId || i.id) === itemId)
 
-    if (existing) {
-      existing.quantity += 1
-    } else {
-      cart.push({
-        ...item,
-        menuItemId: itemId,  // always set — used as key and sent to POST /api/orders
-        quantity: 1,
-      })
-    }
-    saveCart(cart)
+  if (existing) {
+    existing.quantity += 1
+    // Refresh fields in case they were missing/stale (e.g. reordering an old item without an image)
+    existing.img   = item.img   || item.image || existing.img   || ''
+    existing.image = item.image || item.img   || existing.image || ''
+    existing.name  = item.name  || existing.name
+    existing.price = item.price ?? existing.price
+  } else {
+    cart.push({
+      ...item,
+      menuItemId: itemId,
+      quantity: 1,
+    })
   }
+  saveCart(cart)
+}
 
   // Remove single item by menuItemId (backend _id of the menu item)
   const removeFromCart = (menuItemId) => {
@@ -147,7 +142,7 @@ export default function CartPage() {
 
                 {/* Image or emoji fallback */}
                 {item.img || item.image ? (
-                  <img src={item.img || item.image} alt={item.name}
+                  <img src={item.img || item.image || ''} alt={item.name}
                     className='w-14 h-14 rounded-xl object-cover shrink-0' />
                 ) : (
                   <div className='w-14 h-14 bg-[#1a1a1a] rounded-xl shrink-0 flex items-center justify-center text-2xl'>🍔</div>
