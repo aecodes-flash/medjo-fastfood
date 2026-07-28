@@ -1,5 +1,5 @@
 import { useNavigate, useLocation } from "react-router-dom";
-import Logo from '../../assets/Logo.jpeg';
+import Logo from '../../assets/logo.png';
 import { MdOutlineDashboard }  from "react-icons/md";
 import { FaClipboardList }     from "react-icons/fa6";
 import { MdOutlineAddCircle }  from "react-icons/md";
