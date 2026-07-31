@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 
+
 const API = import.meta.env.VITE_API_URL;
 
 function Toggle({ on, onToggle }) {
@@ -27,7 +28,6 @@ export default function Setting() {
   const [saving, setSaving] = useState(false);
 
   const [form, setForm] = useState({
-    storeName: "Medjo Fast Food",
     deliveryFee: 49,
     minOrder: 100,
     onlineOrdering: true,
@@ -108,16 +108,6 @@ export default function Setting() {
             <p className="text-orange-500 font-bold tracking-widest uppercase text-sm mb-4">
               🏪 General
             </p>
-
-            <div className="mb-4">
-              <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">Store Name</p>
-              <input
-                type="text"
-                value={form.storeName}
-                onChange={(e) => setForm({ ...form, storeName: e.target.value })}
-                className="w-full bg-[#2a2a2a] border border-white/10 rounded-lg px-4 py-3 text-white outline-none focus:border-orange-500 transition"
-              />
-            </div>
 
             <div className="mb-4">
               <p className="text-xs tracking-widest uppercase text-gray-400 mb-2">Delivery Fee (₱)</p>

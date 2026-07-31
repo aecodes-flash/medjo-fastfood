@@ -53,6 +53,7 @@ app.use("/api/checkout", checkoutRoutes); // /api/checkout, /api/checkout/order/
 app.use("/api/settings", settingsRoutes); // GET and UPDATE settings
 app.use("/images", express.static(path.join(__dirname, "../public/images")));
 
+app.set("trust proxy", 1); // Trust first proxy for rate limiting behind proxies
 
 // 404 handler
 app.use((req, res) => {

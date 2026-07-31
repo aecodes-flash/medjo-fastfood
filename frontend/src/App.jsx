@@ -3,8 +3,10 @@
 // CartProvider wraps everything so every page can access the cart.
 // ────────────────────────────────────────────────────────────
 
-import { Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 import { Toaster }       from "react-hot-toast";
+import axios              from "axios";
 
 // ── Page imports ─────────────────────────────────────────────
 import Home        from "./Pages/Home";
@@ -26,7 +28,41 @@ import AdminMenu      from "./Pages/admin/AdminMenu";
 import AdminSettings  from "./Pages/admin/AdminSettings";
 import AdminReviews   from "./Pages/admin/AdminReviews";
 
+const API = import.meta.env.VITE_API_URL;
+
 function App() {
+  const [settings, setSettings] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const location = useLocation();
+
+  useEffect(() => {
+    const fetchSettings = async () => {
+      try {
+        const { data } = await axios.get(`${API}/api/settings`);
+        setSettings(data);
+      } catch (error) {
+        console.error("Failed to fetch settings:", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchSettings();
+  }, []);
+
+  // Allow admin routes and login page even during maintenance mode
+  const isAdminRoute = location.pathname.startsWith("/admin") || location.pathname === "/login";
+
+  if (!loading && settings?.maintenanceMode && !isAdminRoute) {
+    return (
+      <div className="min-h-screen bg-[#141414] text-white flex flex-col items-center justify-center p-6 text-center">
+        <h1 className="text-4xl font-stretch-condensed text-orange-500 mb-3">🚧 UNDER MAINTENANCE 🚧</h1>
+        <p className="text-gray-400 max-w-md">
+          We are currently updating our store to serve you better. Please check back shortly!
+        </p>
+      </div>
+    );
+  }
+
   return (
     <>
       <Toaster position="top-center" />

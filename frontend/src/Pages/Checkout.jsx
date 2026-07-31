@@ -18,7 +18,7 @@
 // ─────────────────────────────────────────────────────────────
 
 import { useState, useRef }                        from 'react'
-import { useNavigate }                             from 'react-router-dom'
+import { useNavigate, useLocation }                             from 'react-router-dom'
 import Navbar                                      from '../Components/Navbar'
 import { useCart }                                 from './CartPage'
 import { useAuthStore }                            from '../Store/useAuthStore'
@@ -46,11 +46,12 @@ export default function Checkout() {
   const navigate               = useNavigate()
   const { token, user }              = useAuthStore()
   const { getCart, clearCart } = useCart()
+  const location   = useLocation()
+  const directItem = location.state?.directItem
 
   // ── State ──────────────────────────────────────────────────
-  const [cartItems,    setCartItems]    = useState(getCart())
-  // checkedItems holds the menuItemId of each selected item (all checked by default)
-  const [checkedItems, setCheckedItems] = useState(getCart().map(i => i.menuItemId))
+  const [cartItems,    setCartItems]    = useState(directItem ? [directItem] : getCart())
+  const [checkedItems, setCheckedItems] = useState(directItem ? [directItem.menuItemId] : getCart().map(i => i.menuItemId))
   const [address,      setAddress]      = useState(user?.homeAddress || '')
   const [phone,        setPhone]        = useState(user?.phone || '')
   const [payment,      setPayment]      = useState('cash')  // 'cash' | 'gcash'
@@ -202,7 +203,7 @@ export default function Checkout() {
         { headers: { Authorization: `Bearer ${currentToken}` } }
       )
 
-      clearCart()
+      if (!directItem) clearCart()
       setCartItems([])
       toast.success('Order placed! 🍔')
       setStep(3)

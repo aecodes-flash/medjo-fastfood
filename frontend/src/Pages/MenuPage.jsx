@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import Navbar from "../Components/Navbar";
 import { useCart } from "./CartPage";
 import { useRequireAuth } from "../Hooks/useRequireAuth";
@@ -41,6 +41,7 @@ function MenuPage() {
     .filter((i) => active === "All" || i.category === active)
     .filter((i) => i.name?.toLowerCase().includes(search.toLowerCase()));
 
+  const navigate = useNavigate();
   const { addToCart } = useCart();
   const { requireAuth, showModal, setShowModal, onAuthSuccess } = useRequireAuth();
 
@@ -57,6 +58,20 @@ function MenuPage() {
       });
     });
   };
+
+    const handleBuyNow = (item) => {
+      requireAuth(() => {
+    navigate('/checkout', {
+      state: {
+        directItem: {
+          ...item,
+          menuItemId: item._id,
+          quantity: 1
+        }
+      }
+    })
+  })
+}
 
   return (
     <div className="min-h-screen bg-[#161513]">
@@ -167,7 +182,7 @@ function MenuPage() {
                   <p className="text-[#E87722] font-display text-2xl tracking-wide">
                     ₱{item.price}
                   </p>
-
+                  
                   <button
                     onClick={() => handleAddToCart(item)}
                     className="bg-[#E87722] hover:bg-white hover:text-[#161513] text-white font-black
@@ -176,6 +191,13 @@ function MenuPage() {
                   >
                     + Add to Cart
                   </button>
+            <button
+          onClick={() => handleBuyNow(item)}
+          className="bg-[#E87722] hover:bg-white hover:text-[#161513] text-white font-black
+          px-4 py-2 rounded-full text-xs uppercase tracking-wide
+          transition-all hover:scale-105 active:scale-95 w-fit mt-1 cursor-pointer">
+          Buy Now!
+        </button>
                 </div>
               </div>
             ))}

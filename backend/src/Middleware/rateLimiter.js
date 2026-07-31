@@ -2,28 +2,28 @@ import rateLimit from "express-rate-limit";
 
 // ─── GENERAL LIMITER ────────────────────────────────
 // Applies to all routes
-// Max 100 requests per 15 minutes per user
+// Max 500 requests per 15 minutes per IP
 export const generalLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100,                  // max 100 requests
+  limit: 500,               // max 500 requests
   message: {
-    message: "Too many requests, please try again later."
+    message: "Too many requests, please try again later.",
   },
-  standardHeaders: true,     // sends rate limit info in headers
+  standardHeaders: "draft-7", // modern RFC draft-7 RateLimit-* headers
   legacyHeaders: false,
 });
 
 // ─── AUTH LIMITER ────────────────────────────────────
 // Stricter — applies only to login and register
 // Prevents brute force attacks (guessing passwords)
-// Max 5 attempts per 15 minutes
+// Max 10 attempts per 15 minutes
 export const authLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 10,                   // only 10 login/register attempts
+  limit: 10,                // max 10 login/register attempts
   message: {
-    message: "Too many login attempts, please try again after 15 minutes."
+    message: "Too many login attempts, please try again after 15 minutes.",
   },
-  standardHeaders: true,
+  standardHeaders: "draft-7",
   legacyHeaders: false,
 });
 
@@ -32,10 +32,10 @@ export const authLimiter = rateLimit({
 // Max 30 orders per hour
 export const orderLimiter = rateLimit({
   windowMs: 60 * 60 * 1000, // 1 hour
-  max: 30,                   // max 30 orders per hour
+  limit: 30,                // max 30 orders per hour
   message: {
-    message: "Too many orders placed, please try again later."
+    message: "Too many orders placed, please try again later.",
   },
-  standardHeaders: true,
+  standardHeaders: "draft-7",
   legacyHeaders: false,
 });
